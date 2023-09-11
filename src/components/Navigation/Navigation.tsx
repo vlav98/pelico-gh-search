@@ -22,7 +22,10 @@ function Navigation() {
               }}
             >
               <Link to={"/"}>
-                <HomeIcon sx={{ display: "flex", mr: 1 }}></HomeIcon>
+                <HomeIcon
+                  style={{ color: "#FFF" }}
+                  sx={{ display: "flex", mr: 1 }}
+                ></HomeIcon>
               </Link>
               <Button
                 component={Link}

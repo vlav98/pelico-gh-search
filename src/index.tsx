@@ -1,7 +1,9 @@
+import { ApolloProvider } from "@apollo/client";
 import { ThemeProvider } from "@mui/material";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
+import client from "./graphql/client";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import { customTheme } from "./theme";
@@ -9,11 +11,14 @@ import { customTheme } from "./theme";
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
+
 root.render(
   <React.StrictMode>
-    <ThemeProvider theme={customTheme}>
-      <App />
-    </ThemeProvider>
+    <ApolloProvider client={client}>
+      <ThemeProvider theme={customTheme}>
+        <App />
+      </ThemeProvider>
+    </ApolloProvider>
   </React.StrictMode>
 );
 
