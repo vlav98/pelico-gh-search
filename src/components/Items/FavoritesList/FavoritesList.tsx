@@ -3,18 +3,10 @@ import { FavoritesItemsData } from "../../../types/types";
 import FavoritedItem from "../FavoritedItem/FavoritedItem";
 
 interface FavoriteItemProps {
-  label: string;
-  description: string;
-  onToggleFavorite: () => void;
-  isFavourite: boolean;
+  favorites: string[];
 }
 
-const FavoritesList: React.FC<FavoriteItemProps> = ({
-  label,
-  onToggleFavorite,
-  description,
-  isFavourite,
-}) => {
+const FavoritesList: React.FC<FavoriteItemProps> = () => {
   const [favorites, setFavorites] = useState<FavoritesItemsData>({ items: [] });
 
   const handleToggleFavorite = (

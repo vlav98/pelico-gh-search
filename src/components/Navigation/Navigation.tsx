@@ -17,7 +17,7 @@ function Navigation() {
             <Box
               sx={{
                 flexGrow: 1,
-                display: { xs: "flex", md: "none", mr: 1 },
+                display: { xs: "flex", mr: 1 },
                 alignItems: "center",
               }}
             >

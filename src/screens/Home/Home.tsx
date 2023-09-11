@@ -1,33 +1,49 @@
 import { Container, Typography } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FoundSearchedItem from "../../components/Items/FoundSearchedItem/FoundSearchedItem";
 import SearchComponent from "../../components/SearchComponent/SearchComponent";
-import { SearchResult, SearchResultsData } from "../../types/types";
+import { SearchResultsData } from "../../types/types";
 
 function Home() {
   const [searchResults, setSearchResults] = useState<SearchResultsData | null>(
     null
   );
 
-  const [favorites, setFavorites] = useState<SearchResult[]>([]);
+  const [favorites, setFavorites] = useState<string[]>([]);
 
   const handleSearchResults = (data: SearchResultsData): void => {
     setSearchResults(data);
   };
 
-  const toggleFavorite = (item: SearchResult) => {
-    if (favorites.some((favorite) => favorite.id === item.id)) {
-      setFavorites(favorites.filter((favorite) => favorite.id !== item.id));
+  const handleToggleFavorite = (itemId: string) => {
+    if (favorites.includes(itemId)) {
+      setFavorites(favorites.filter((id) => id !== itemId));
     } else {
-      setFavorites([...favorites, item]);
+      setFavorites([...favorites, itemId]);
     }
   };
+
+  const isFavorited = (itemId: string) => favorites.includes(itemId);
+
+  useEffect(() => {
+    const storedFavoritedItems = localStorage.getItem("favorites");
+    if (storedFavoritedItems) {
+      setFavorites(JSON.parse(storedFavoritedItems));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("favorites", JSON.stringify(favorites));
+  }, [favorites]);
 
   return (
     <Container>
       <Typography>This is home</Typography>
       <Container sx={{ alignItems: "center" }}>
-        <SearchComponent onSearchResults={handleSearchResults} />
+        <SearchComponent
+          onSearchResults={handleSearchResults}
+          onToggleFavorite={handleToggleFavorite}
+        />
         {searchResults &&
           searchResults.search &&
           searchResults.search.nodes && (
@@ -36,12 +52,13 @@ function Home() {
               <ul>
                 {searchResults.search.nodes.map((result) => (
                   <FoundSearchedItem
+                    key={result.id}
                     label={result.name}
                     description={result.description}
                     onToggleFavorite={() => {
-                      toggleFavorite(result);
+                      handleToggleFavorite(result.id);
                     }}
-                    isFavourite={false}
+                    isFavourite={isFavorited(result.id)}
                   />
                 ))}
               </ul>
