@@ -30,7 +30,6 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
 
   React.useEffect(() => {
     console.log("data", data);
-
     if (data) {
       onSearchResults(data);
     }
@@ -46,13 +45,6 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
       />
       {loading && <p>Loading...</p>}
       {error && <p>Error: {error.message}</p>}
-      {/* {data && data.searchResults ? (
-        <ul>
-          {data.searchResults.map((result) => (
-            <li key={result.id}>{result.name}</li>
-          ))}
-        </ul>
-      ) : null} */}
     </div>
   );
 };
